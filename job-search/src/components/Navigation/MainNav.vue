@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import ActionButton from './ActionButton.vue'
+import ActionButton from '@/components/ActionButton.vue'
 import ProfileImage from './ProfileImage.vue'
 import TheSubnav from './TheSubnav.vue'
 
