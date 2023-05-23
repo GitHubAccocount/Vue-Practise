@@ -1,17 +1,13 @@
 <template>
-  <main-nav />
-  <the-hero />
+  <div>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/jobs/results">Job Results</router-link>
+  </div>
+  <router-view />
 </template>
 
 <script>
-import MainNav from '@/components/Navigation/MainNav.vue'
-import TheHero from '@/components/TheHero.vue'
-
 export default {
-  name: 'App',
-  components: {
-    MainNav: MainNav,
-    TheHero: TheHero
-  }
+  name: 'App'
 }
 </script>
