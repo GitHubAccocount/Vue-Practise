@@ -1,27 +1,35 @@
-import { queryByRole, render, screen } from '@testing-library/vue'
-import MainNav from '@/components/Navigation/MainNav.vue'
-import { describe, expect } from 'vitest'
-import userEvent from '@testing-library/user-event'
+import { queryByRole, render, screen } from '@testing-library/vue';
+import MainNav from '@/components/Navigation/MainNav.vue';
+import { describe, expect } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { RouterLinkStub } from '@vue/test-utils';
 
 describe('MainNav', () => {
   const renderMainNav = () => {
+    const $route = {
+      name: 'Home'
+    };
     render(MainNav, {
       global: {
+        mocks: {
+          $route
+        },
         stubs: {
-          FontAwesomeIcon: true
+          FontAwesomeIcon: true,
+          RouterLink: RouterLinkStub
         }
       }
-    })
-  }
+    });
+  };
   it('displays comany name', () => {
-    renderMainNav()
-    const companyName = screen.getByText('Company Careers')
-    expect(companyName).toBeInTheDocument()
-  })
+    renderMainNav();
+    const companyName = screen.getByText('Company Careers');
+    expect(companyName).toBeInTheDocument();
+  });
   it('displays menu items for naviagtion', () => {
-    renderMainNav()
-    const naviagtionMenuItmes = screen.getAllByRole('listitem')
-    const naviagtionMenuText = naviagtionMenuItmes.map((item) => item.textContent)
+    renderMainNav();
+    const naviagtionMenuItmes = screen.getAllByRole('listitem');
+    const naviagtionMenuText = naviagtionMenuItmes.map((item) => item.textContent);
     expect(naviagtionMenuText).toEqual([
       'Teams',
       'Locations',
@@ -29,22 +37,22 @@ describe('MainNav', () => {
       'How we hire',
       'Students',
       'Jobs'
-    ])
-  })
+    ]);
+  });
   it('displays profile img after clicking the button', async () => {
-    renderMainNav()
+    renderMainNav();
     let profileImg = screen.queryByRole('img', {
       name: /user profile image/i
-    })
-    expect(profileImg).not.toBeInTheDocument()
+    });
+    expect(profileImg).not.toBeInTheDocument();
 
     const loginButton = screen.getByRole('button', {
       name: /sign in/i
-    })
-    await userEvent.click(loginButton)
+    });
+    await userEvent.click(loginButton);
     profileImg = screen.getByRole('img', {
       name: /user profile image/i
-    })
-    expect(profileImg).toBeInTheDocument()
-  })
-})
+    });
+    expect(profileImg).toBeInTheDocument();
+  });
+});
