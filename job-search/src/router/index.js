@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 import HomeView from '@/views/HomeView.vue';
 import JobResultsView from '@/views/JobResultsView.vue';
-import JobView from '@/view/JobView.vue';
+import JobView from '@/views/JobView.vue';
 
 const routes = [
   {
