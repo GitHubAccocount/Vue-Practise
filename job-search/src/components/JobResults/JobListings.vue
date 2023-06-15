@@ -33,16 +33,13 @@
 </template>
 
 <script>
-import axios from 'axios';
 import JobListing from './JobListing.vue';
+
+import { mapState, mapActions } from 'pinia';
+import { useJobsStore, FETCH_JOBS } from '@/stores/jobs';
 
 export default {
   name: 'JobListings',
-  data() {
-    return {
-      jobs: []
-    };
-  },
   components: {
     JobListing
   },
@@ -50,13 +47,15 @@ export default {
     currentPage() {
       return Number.parseInt(this.$route.query.page || '1');
     },
+
+    ...mapState(useJobsStore, ['jobs']),
+
     displayedJobs() {
       const pageNumber = this.currentPage; // 2
       const startIndex = (pageNumber - 1) * 10; // 10
       const endIndex = pageNumber * 10; // 20
       return this.jobs.slice(startIndex, endIndex);
     },
-
     nextPage() {
       const nextPage = this.currentPage + 1;
       const upperLimit = Math.ceil(this.jobs.length / 10);
@@ -69,9 +68,10 @@ export default {
     }
   },
   async mounted() {
-    const baseUrl = import.meta.env.VITE_APP_API_URL;
-    const response = await axios.get(`${baseUrl}/jobs`);
-    this.jobs = response.data;
+    this.FETCH_JOBS();
+  },
+  methods: {
+    ...mapActions(useJobsStore, [FETCH_JOBS])
   }
 };
 </script>
